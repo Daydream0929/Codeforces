@@ -1,0 +1,60 @@
+#include<iostream>
+using namespace std;
+void printarr(int arr[],int n) {
+	for (int i = 0; i < n; i++) {
+		cout << arr[i] << " ";
+	}
+}
+void solve() {
+	int n, k;
+	cin >> n >> k;
+	int* arr = new int[n];
+	for (int i = 0; i < n; i++) {
+		cin >> arr[i];
+	}
+	int l = -1;
+	int r = n - 1;
+	for (int i = 0; i < n; i++) {
+		if (arr[i] > 0) {
+			l = i;
+			break;
+		}
+	}
+	
+	if (l == r||l==-1) {  //全为0或者0 0 0 ……1
+		printarr(arr,n);
+		
+	}
+
+	else {
+		while (l < r && k > 0) {
+			while (arr[l] > 0  && k > 0) {
+				arr[l]--;
+				arr[r]++;
+				k--;
+			}
+			if (arr[l] == 0) {
+				l++;
+			}
+			if (arr[r] == 0) {
+				r--;
+			}
+
+
+		}
+		printarr(arr, n);
+	}
+
+	
+}
+
+int main() {
+	int t;
+	cin >> t;
+	while (t--) {
+		solve();
+	}
+
+
+	return 0;
+}
