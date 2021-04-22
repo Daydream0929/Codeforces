@@ -1,0 +1,133 @@
+#include<iostream>
+using namespace std;
+const int mamn = 51;
+#include<vector>
+#include<string>
+
+
+int minx(int &n,string &s, int &k)
+{
+    int res = 0; //记录替换的x个数
+    int fp = 0;//记录第一个x和最后一个x下标
+    int lp = 0;
+    int* a = new int[n];
+    for (int i = 0; i < n; i++)
+    {
+        if (s[i] == '*')
+        {
+            a[i] = 1;  //*
+        }
+        else
+        {
+            a[i] = -1; //.
+        }
+    }
+
+    for (int i = 0; i < n; i++)  //replace first *
+    {
+        if (a[i] ==1)
+        {
+            a[i] = 0;
+            res++;
+            fp = i;
+            break;
+        }
+    }
+    for (int i = n - 1; i >= 0; i--) //replace last *
+    {
+        if (a[i] == 1)
+        {
+            a[i] = 0;
+            res++;
+            lp = i;
+            break;
+        }
+    }
+
+
+
+    if (lp - fp <= k) //茶碗第一个和最后一个就满足条件
+    {
+        return res;
+    }
+        int left = fp;
+        int right = fp;
+        int flag = 0;
+
+
+    while (1)
+    {
+        right = left + k;
+        while (right > left)
+        {
+            if (a[right] == 1)
+            {
+                flag++;
+                a[right] = 0;
+                res++;
+                left = right;
+                break;
+            }
+            right--;
+        }
+        if (lp - right <= k)
+            break;
+
+
+    }
+
+    return res;
+
+
+
+
+
+
+}
+
+
+
+
+
+int main()
+{
+    int t;
+    cin >> t;
+    struct node
+    {
+        int n;
+        string s;
+        int k;
+
+    };
+    vector<node> v(t);
+    for (int i = 0; i < 2 * t; i++)
+    {
+        node a;
+        int n, k;
+        string s;
+        if (i % 2 == 0)
+        {
+            cin >> n >> k;
+            v[i / 2].n = n;
+            v[i / 2].k = k;
+
+
+        }
+        else
+        {
+            cin >> s;
+            
+            v[i / 2].s = s;
+        }
+
+
+    }
+    for (int i = 0; i < t; i++)
+    {
+        cout << minx(v[i].n, v[i].s, v[i].k) << endl;
+    }
+ 
+
+    return 0;
+}
