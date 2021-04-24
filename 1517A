@@ -1,0 +1,50 @@
+#include<iostream>
+using namespace std;
+long long a[15];
+
+int w(long long x) {  //判断x是几位数
+	int r = 1;
+	while (x / 10 > 0) {
+		x /= 10;
+		r++;
+	}
+	return r;
+}
+
+void solve() {
+	long long n;
+	cin >> n;
+	if (n < 2050) {
+		cout << -1 << endl;
+		return;
+	}
+	int res = 0;
+	int ws = w(n); //n的位数 ws>=4
+	while (n && n>=2050) {
+		int t = 0;
+		t = n / a[ws - 4];
+		res += t;
+		n -= t * a[ws - 4];
+		ws--;		
+	}
+	if (n) {
+		cout << -1 << endl;
+	}
+	else {
+		cout << res << endl;
+	}
+
+}
+
+int main() {
+	for (int i = 0; i < 15; i++) {
+		a[i] = 2050 * pow(10, i);
+	}
+	int t;
+	cin >> t;
+	while (t--) {
+		solve();
+	}
+	
+	return 0;
+}
